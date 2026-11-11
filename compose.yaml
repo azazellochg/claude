@@ -1,0 +1,36 @@
+services:
+  claude:
+    image: localhost/claude:latest
+    container_name: claude
+    hostname: claude
+    environment:
+      CLAUDE_CONFIG_DIR: /home/claude/.claude
+      CLAUDE_CODE_PLUGIN_SEED_DIR: /opt/claude-seed
+      DISABLE_UPDATES: 1
+      DISABLE_TELEMETRY: 1
+      DO_NOT_TRACK: 1
+      CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1
+      DISABLE_ERROR_REPORTING: 1
+    user: "1000:1000"
+    userns_mode: "auto"
+    stdin_open: true
+    tty: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges=true
+    pids_limit: 256
+    mem_limit: 8g
+    cpus: 4
+    network_mode: bridge
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=1g
+    volumes:
+      - claude-workspace:/workspace:rw
+      - claude-config:/home/claude/.claude:rw
+    restart: "no"
+
+volumes:
+  claude-workspace:
+  claude-config:
