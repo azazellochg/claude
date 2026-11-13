@@ -11,6 +11,13 @@ services:
       DO_NOT_TRACK: 1
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1
       DISABLE_ERROR_REPORTING: 1
+
+      PYTHONDONTWRITEBYTECODE: 1
+      PYTHONUNBUFFERED: 1
+      TMPDIR: /tmp
+      PIP_CACHE_DIR: /tmp/pip-cache
+      UV_CACHE_DIR: /tmp/uv-cache
+      XDG_CACHE_HOME: /tmp/cache
     user: "1000:1000"
     userns_mode: "auto"
     stdin_open: true
