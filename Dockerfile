@@ -1,5 +1,4 @@
-
-FROM debian:bookworm-slim
+FROM debian:trixie-slim
 
 ENV HOME=/home/claude
 ENV BUN_INSTALL=/home/claude/.bun
@@ -14,20 +13,28 @@ ENV UV_CACHE_DIR=/tmp/uv-cache
 
 ARG DEBIAN_FRONTEND=noninteractive
 
-# System dependencies and user
+# System dependencies and useful tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
     git \
     bash \
-    iptables \
-    ipset \
+    bash-completion \
+    fd-find \
+    gawk \
+    jq \
+    less \
+    man-db \
     postgresql-client \
     python3 \
     python3-venv \
-    python3-pip \
-    unzip && \
+    ripgrep \
+    sed \
+    shellcheck \
+    shfmt \
+    unzip \
+    yq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* && \
     useradd -m -u 1000 -s /bin/bash claude && \
@@ -39,6 +46,11 @@ USER claude
 # Install uv
 RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 
+RUN uv tool install ruff && \
+    uv tool install pytest && \
+    uv tool install mypy && \
+    uv tool install pre-commit
+
 # Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
 
@@ -48,6 +60,13 @@ RUN curl -fsSL https://claude.ai/install.sh | bash
 # Preinstall pg-aiguide into the plugin seed
 RUN CLAUDE_CODE_PLUGIN_CACHE_DIR=/opt/claude-seed claude plugin marketplace add timescale/pg-aiguide && \
     CLAUDE_CODE_PLUGIN_CACHE_DIR=/opt/claude-seed claude plugin install pg@aiguide
+
+# Git config
+RUN git config --global alias.co checkout && \
+    git config --global alias.br branch && \
+    git config --global alias.st status && \
+    git config --global alias.ci commit
+
 
 WORKDIR /workspace
 
