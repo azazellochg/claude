@@ -26,6 +26,7 @@ RUN apt-get update && \
     jq \
     less \
     man-db \
+    poppler-utils \
     postgresql-client \
     python3 \
     python3-venv \
