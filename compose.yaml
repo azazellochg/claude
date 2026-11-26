@@ -12,7 +12,6 @@ services:
       DISABLE_ERROR_REPORTING: 1
       CLAUDE_CODE_PLUGIN_PREFER_HTTPS: 1
     user: "1000:1000"
-    init: true
     userns_mode: "auto"
     stdin_open: true
     tty: true
