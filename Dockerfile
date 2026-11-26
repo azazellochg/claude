@@ -10,6 +10,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PIP_CACHE_DIR=/tmp/pip-cache
 ENV UV_CACHE_DIR=/tmp/uv-cache
+ENV BUN_INSTALL_CACHE_DIR=/tmp/bun-cache
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -68,6 +69,8 @@ RUN git config --global alias.co checkout && \
     git config --global alias.st status && \
     git config --global alias.ci commit
 
+# Set after the build steps so build-time caches stay out of the image
+ENV XDG_CACHE_HOME=/tmp/cache
 
 WORKDIR /workspace
 

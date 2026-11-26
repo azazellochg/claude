@@ -4,7 +4,6 @@ services:
     container_name: claude
     hostname: claude
     environment:
-      CLAUDE_CONFIG_DIR: /home/claude/.claude
       CLAUDE_CODE_PLUGIN_SEED_DIR: /opt/claude-seed
       DISABLE_AUTOUPDATER: 1
       DISABLE_TELEMETRY: 1
@@ -12,14 +11,8 @@ services:
       CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: 1
       DISABLE_ERROR_REPORTING: 1
       CLAUDE_CODE_PLUGIN_PREFER_HTTPS: 1
-
-      PYTHONDONTWRITEBYTECODE: 1
-      PYTHONUNBUFFERED: 1
-      TMPDIR: /tmp
-      PIP_CACHE_DIR: /tmp/pip-cache
-      UV_CACHE_DIR: /tmp/uv-cache
-      XDG_CACHE_HOME: /tmp/cache
     user: "1000:1000"
+    init: true
     userns_mode: "auto"
     stdin_open: true
     tty: true

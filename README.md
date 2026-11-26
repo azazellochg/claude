@@ -11,3 +11,15 @@ podman build -t claude .
 podman-compose -f compose.yaml up -d
 podman exec -it claude claude --resume XXXXX
 ```
+
+## Copying files in and out
+
+`/workspace` is a named volume, not a host bind mount. Use `podman cp` to move files:
+
+```bash
+# host -> container
+podman cp file claude:/workspace/
+
+# container -> host
+podman cp claude:/workspace/myproject/my.patch .
+```
